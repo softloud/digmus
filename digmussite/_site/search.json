@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "digmussite",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "This site documents my journey into exploring animating musical composition with directed graphs.\nI was been a professional musician (20 years) for twice as long as a data scientist (10 years), but never married the two passions before."
+  },
+  {
+    "objectID": "hellobach.html",
+    "href": "hellobach.html",
+    "title": "Hello, Bach.",
+    "section": "",
+    "text": "Animate the subject of J. S. Bach’s Contrapunctus I as a directed graph using ggraph.\nThe biggest learning curve here is going to be the data export of music; I’m exploring how to produce live animation, but need to break this into a series of small, achievable objectives. The live component will come last, to begin with I need to figure out how to export the data from what I play into something I can understand as data.\nAnother quite separate hurdle is to explore expanding my compositions from acoustic to production-infused neoclassical I’ve always heard in my head. To get started, however, I will use Bach for developing my animation ideas."
+  },
+  {
+    "objectID": "about.html#hello-bach",
+    "href": "about.html#hello-bach",
+    "title": "About",
+    "section": "Hello Bach",
+    "text": "Hello Bach\nAnimate the subject of Contropunctus I using ggraph and gganimate.\nEach node will be a note, and each edge represents a sequence of two notes. The animation will add edges to the nodes as sequences cumulate."
+  },
+  {
+    "objectID": "about.html#proof-of-concept",
+    "href": "about.html#proof-of-concept",
+    "title": "About",
+    "section": "Proof of concept",
+    "text": "Proof of concept\nAnimate Contrapunctus I in R, prerendered."
+  },
+  {
+    "objectID": "about.html#animation-with-dots-in-unity",
+    "href": "about.html#animation-with-dots-in-unity",
+    "title": "About",
+    "section": "Animation with DOTS in Unity",
+    "text": "Animation with DOTS in Unity\nAnimate Contrpunctus I in Unity, prerendered."
+  },
+  {
+    "objectID": "about.html#live-music-animation",
+    "href": "about.html#live-music-animation",
+    "title": "About",
+    "section": "Live music animation",
+    "text": "Live music animation\nFor live music, I suspect I will have rendering issues using R and midi files.\nThe bluesky plan is to adapt my proof of concept to C# and Unity, connect midi keyboards, and develop software to provide live animations of my algorithmic compositions."
+  },
+  {
+    "objectID": "hellobach.html#garageband-to-midi-bossfight",
+    "href": "hellobach.html#garageband-to-midi-bossfight",
+    "title": "Hello, Bach.",
+    "section": "Garageband to midi bossfight",
+    "text": "Garageband to midi bossfight\nMy first attempt at exporting data from garageband failed. I tried converting the raw garageband file but this was not recognised. On closer inspection, it seems I need to dig through this post deeper if I were to successfully convert garageband to midi.\n\nmfr &lt;- MidiFramer$new('../midi/dimus.band.mid')\n\nError in eval(expr, envir, enclos): object 'MidiFramer' not found"
+  },
+  {
+    "objectID": "hellobach.html#garageband-to-midi-bossfight-abandoned",
+    "href": "hellobach.html#garageband-to-midi-bossfight-abandoned",
+    "title": "Hello, Bach.",
+    "section": "Garageband to midi bossfight (abandoned)",
+    "text": "Garageband to midi bossfight (abandoned)\nMy first attempt at exporting data from garageband failed. I tried converting the raw garageband file but this was not recognised. On closer inspection, it seems I need to dig through this post deeper if I were to successfully convert garageband to midi.\n\nmfr &lt;- MidiFramer$new('../midi/dimus.band.mid')\n\nError in eval(expr, envir, enclos): object 'MidiFramer' not found"
+  },
+  {
+    "objectID": "hellobach.html#importing-midi-to-r",
+    "href": "hellobach.html#importing-midi-to-r",
+    "title": "Hello, Bach.",
+    "section": "Importing midi to R",
+    "text": "Importing midi to R\n\nmfr &lt;- MidiFramer$new('../midi/wikisource-contrapunctus-subject.midi')\n\nLet’s take a look at what we get.\n\nmfr\n\n&lt;MidiFramer&gt;\n  Public:\n    clone: function (deep = FALSE) \n    df_meta: data.frame\n    df_not_notes: data.frame\n    df_notes_long: tbl_df, tbl, data.frame\n    df_notes_wide: tbl_df, tbl, data.frame\n    dfm: tbl_df, tbl, data.frame\n    initialize: function (midi_file_string = NULL) \n    mf: miditapyr.midi_frame.MidiFrames, python.builtin.object\n    midi_file_string: ../midi/wikisource-contrapunctus-subject.midi\n    midi_frame_mod: tbl_df, tbl, data.frame\n    params: list\n    play: function (audiofile = tempfile(\"mf_out_\", fileext = \".mp3\"), \n    populate_r_fields: function () \n    ticks_per_beat: active binding\n    update_notes_wide: function (mod) \n  Private:\n    deep_clone: function (name, value)"
+  },
+  {
+    "objectID": "hellobach.html#abandoned-garageband-to-midi-bossfight",
+    "href": "hellobach.html#abandoned-garageband-to-midi-bossfight",
+    "title": "Hello, Bach.",
+    "section": "Abandoned Garageband to midi bossfight",
+    "text": "Abandoned Garageband to midi bossfight\nMy first attempt at exporting data from garageband failed. I tried converting the raw garageband file but this was not recognised. On closer inspection, it seems I need to dig through this post deeper if I were to successfully convert garageband to midi.\n\nmfr &lt;- MidiFramer$new('../midi/dimus.band.mid')\n\nError in eval(expr, envir, enclos): OSError: MThd not found. Probably not a MIDI file\n\n\nThe console tells me Probably not a MIDI file.\nHappily the wikipedia page for Contrapunctus I (from which the image of the motif is sourced) provides a midi file of not only the subject, but the entire fugue. So, for the first two stages of digmus, I now have midi!"
+  }
+]

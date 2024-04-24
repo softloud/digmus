@@ -1,0 +1,64 @@
+---
+title: Hello, Bach.
+date: April 24, 2024
+---
+
+# Objective
+
+Animate the *subject* of J. S. Bach's Contrapunctus I as a directed graph using `ggraph`.
+
+The biggest learning curve here is going to be the data export of music; I'm exploring how to produce live animation, but need to break this into a series of small, achievable objectives. The live component will come last, to begin with I need to figure out how to export the data from what I play into something I can understand as data. 
+
+Another quite separate hurdle is to explore expanding my compositions from acoustic to production-infused neoclassical I've always heard in my head. To get started, however, I will use Bach for developing my animation ideas.
+
+# Contrapunctus I
+
+Contrapunctus I is a particularly nice piece of music for this task. It is the opening work of Bach's [*The Art of Fugue*](https://en.wikipedia.org/wiki/The_Art_of_Fugue), and follows a very specific musical structure that Bach was pivotal in developing. 
+
+A *fugue* is a work of polyphonic (melodies that produce vertical harmonies through overlay) that develops a *subject*, a short melodic motif. 
+
+Here is the subject of Contrapunctus I, the focus of this animation project.
+
+![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)
+
+
+# Getting the fucking data
+
+As with every new data science project, the biggest hurdle is getting the fucking data in a format I can interface with data science tools. 
+
+I don't have a midi keyboard yet, so I used the computer keyboard to interface with an onscreen piano in garageband to play the opening melody of Contrapunctus I.
+
+As a start, I will try using this package for importing midi as a dataframe.
+
+```{r}
+library(pyramidi)
+
+```
+
+## Abandoned Garageband to midi bossfight
+
+My first attempt at exporting data from garageband failed. I tried converting the raw garageband file but this was not recognised. On closer inspection, it seems I need to dig through [this post](https://apple.stackexchange.com/questions/291622/how-to-save-export-as-a-midi-file-in-garageband) deeper if I were to successfully convert garageband to midi.
+
+```{r error=TRUE}
+mfr <- MidiFramer$new('../midi/dimus.band.mid')
+
+```
+
+The console tells me `Probably not a MIDI file`.
+
+Happily the [wikipedia page for Contrapunctus I](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png) (from which the image of the motif is sourced) provides a midi file of not only the subject, but the entire fugue. So, for the first two stages of `digmus`, I now have midi! 
+
+## Importing midi to R
+
+```{r }
+mfr <- MidiFramer$new('../midi/wikisource-contrapunctus-subject.midi')
+
+```
+
+Let's take a look at what we get.
+
+```{r}
+mfr
+```
+
+
