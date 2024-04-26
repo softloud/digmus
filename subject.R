@@ -93,8 +93,11 @@ graphdat %>%
     geom_node_point(size = 10) +
     theme_graph(
         background = 'white'
-    ) 
-    
+    ) +
+    transition_time(from)
+
+# how to add text labels to nodes so I can check it's doing what I want it to?
+
 # how to sort the nodes by the note column?
 
 # how to animate by beat the note falls on?
