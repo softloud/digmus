@@ -9,7 +9,7 @@ knitr::opts_chunk$set(error = TRUE)
 
 ```{r echo=FALSE}
 
-Sys.setenv(RETICULATE_PYTHON = "/Users/charles/Documents/digmus/digmusenv/bin/python")
+# Sys.setenv(RETICULATE_PYTHON = "/Users/charles/Documents/digmus/digmusenv/bin/python")
 # reticulate::py_config()
 
 ```
@@ -59,32 +59,15 @@ note <- c(62, 64, 65, 67, 69, 70, 61)
 
 d_minor <- tibble(d_minor, note)
 
-subject_dat <- mididat |>
-    left_join(d_minor, by = 'note') |>
-    mutate(step = rep.int(c('start', 'stop'), times = 12), 
-        index = rep(seq(1, 12), each = 2)) |>
-        pivot_wider(names_from = step, values_from = b) |>   
-    mutate(
-        note = as.integer(note),
-        b = start,
-        start = as.integer(round(start)),
-        stop = as.integer(round(stop)),
-        bar = start %/% 16 + 1,
-        bar = as.integer(bar),
-        duration = stop - start
-    ) |>
-    select(d_minor, note, start, duration, bar, b) 
-
-write_csv(subject_dat, '../mididat.csv')
-
-gtfirsttry <- 
-subject_dat |> gt() |>
-    tab_header(md('![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)'))
-
-gtsave(gtfirsttry, 'firsttrytab.png')
-
 ```
 
 # ggraph data structure
 
+Now to convert this table to something that 
+
  
+```{r}
+
+
+
+```
