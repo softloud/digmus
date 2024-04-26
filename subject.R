@@ -13,6 +13,9 @@ library(tidygraph)
 
 graphdat <- read_csv('mididf.csv')
 
+graphdat |> gt() |> tab_header(
+        md('![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)'))
+
 # graphdat columns
 
 # note - midi note by number, accounts for octave
