@@ -1,0 +1,164 @@
+---
+title: First explorations
+date: April 24, 2024
+---
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
+```{r echo=FALSE}
+
+Sys.setenv(RETICULATE_PYTHON = "/Users/charles/Documents/digmus/digmusenv/bin/python")
+# reticulate::py_config()
+
+```
+
+```{r message=FALSE}
+# general datasci toolkit packages
+library(tidyverse) # grabbag of datasci tools
+library(gt) # for tables
+library(janitor) # clean_names converts names to snake case
+
+```
+
+
+# Getting the fucking data
+
+As with every new data science project, the biggest hurdle is getting the fucking data in a format I can interface with data science tools. 
+
+I don't have a midi keyboard yet, so I used the computer keyboard to interface with an onscreen piano in garageband to play the opening melody of Contrapunctus I.
+
+As a start, I will try using this package for importing midi as a dataframe.
+
+```{r}
+library(pyramidi)
+
+```
+
+## Abandoned Garageband to midi bossfight
+
+My first attempt at exporting data from garageband failed. I tried converting the raw garageband file but this was not recognised. On closer inspection, it seems I need to dig through [this post](https://apple.stackexchange.com/questions/291622/how-to-save-export-as-a-midi-file-in-garageband) deeper if I were to successfully convert garageband to midi.
+
+```{r error=TRUE}
+path_to_midi <- '../midi/dimus.band.mid'
+
+mfr <- MidiFramer$new(path_to_midi)
+
+```
+
+The console tells me `Probably not a MIDI file`.
+
+Happily the [wikipedia page for Contrapunctus I](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png) (from which the image of the motif is sourced) provides a midi file of not only the subject, but the entire fugue. So, for the first two stages of `digmus`, I now have midi! 
+
+## Importing midi to R
+
+```{r }
+mfr <- MidiFramer$new('../midi/wikisource-contrapunctus-subject.midi')
+
+```
+
+Let's take a look at what we get.
+
+```{r}
+# we have data! 
+
+mfr
+```
+
+Let's dig into these objects and see what we have. 
+
+
+```{r}
+mfr$df_notes_long |> skimr::skim()
+
+```
+
+This one has notes, that's useful. Perhaps b is useful, let's find out. This has 24 rows. Do we have 24 notes? I don't think so. There are only 12 notes. But perhaps this is reflecting the start and end of the note. 
+
+Let's just inspect the columns that have data. Note is making sense
+
+```{r}
+mfr$df_notes_long |>
+    select(note, i_note, ticks, b) |>
+    gt()
+
+```
+
+We're getting somewhere, and the internet tells me middle C is 60, so 62 is D. Ticks seems to be the timepoint. But long format is not quite what I want, I can now see. I want to map note to note. Let's try wide. 
+
+```{r}
+mfr$df_notes_wide |> skimr::skim()
+
+```
+
+Argh what does this look like? 
+
+
+```{r}
+mfr$df_notes_wide |> head() |> gt()
+
+```
+
+Hmm, still not that useful. And I still can't seem to dig out what these fields are. 
+
+Let's try [this pivot function](https://urswilke.github.io/pyramidi/reference/pivot_wide_notes.html).
+
+```{r}
+
+mfr$dfm
+
+# this looks useful
+mfr$ticks_per_beat
+
+```
+
+I still don't understand all these fields.
+
+## Oh, fuck it 
+
+On closer inspection, the long data has everything I need. `note` tells me the note, and we are just in one octave. And it seems that `b` tells me the beat of the bar the note falls on. I find this format a little confusing, so let's convert the data to something I find interpretable and see if my assumptions are correct. 
+
+```{r}
+hard_to_interpret_dat <- mfr$df_notes_long |> select(note, b) |> distinct()
+
+hard_to_interpret_dat |> gt()
+
+```
+
+```{r}
+# create transformations on long then pivot
+
+# oh fuck it will just hardcode the scale
+d_minor <- c('D', 'E', 'F', 'G', 'A', 'Bb', 'C#')
+
+# need to set up a modulo on this, but key/context matters 
+# couldn't find a nice R function for this, might need to engineer 
+# what I need
+# but for now, we shall hardcode
+note <- c(62, 64, 65, 67, 69, 70, 61)
+
+d_minor <- tibble(d_minor, note)
+
+nrow(hard_to_interpret_dat |> left_join(d_minor))
+
+hard_to_interpret_dat |>
+    left_join(d_minor) |>
+    mutate(step = rep.int(c('start', 'stop'), times = 12), 
+        index = rep(seq(1, 12), each = 2)) |>
+        pivot_wider(names_from = step, values_from = b) |>
+        mutate(start_bar = start %% 16)
+
+```
+
+# Transforming midi to a digraph frame
+
+To define a frame of the digraph animation, we need to have a dataframe that defines to and from edges by node.
+
+The length of time of the note will define when the frames change under animation; but let's cross that bridge later.  
+
+### The first frame
+
+This frame will have one note. 
+
+

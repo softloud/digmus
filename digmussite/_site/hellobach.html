@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.330">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,7 +90,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -145,11 +146,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
   <li><a href="#contrapunctus-i" id="toc-contrapunctus-i" class="nav-link" data-scroll-target="#contrapunctus-i">Contrapunctus I</a></li>
-  <li><a href="#getting-the-fucking-data" id="toc-getting-the-fucking-data" class="nav-link" data-scroll-target="#getting-the-fucking-data">Getting the fucking data</a>
-  <ul class="collapse">
-  <li><a href="#abandoned-garageband-to-midi-bossfight" id="toc-abandoned-garageband-to-midi-bossfight" class="nav-link" data-scroll-target="#abandoned-garageband-to-midi-bossfight">Abandoned Garageband to midi bossfight</a></li>
-  <li><a href="#importing-midi-to-r" id="toc-importing-midi-to-r" class="nav-link" data-scroll-target="#importing-midi-to-r">Importing midi to R</a></li>
-  </ul></li>
+  <li><a href="#midi-to-data" id="toc-midi-to-data" class="nav-link" data-scroll-target="#midi-to-data">Midi to data</a></li>
+  <li><a href="#ggraph-data-structure" id="toc-ggraph-data-structure" class="nav-link" data-scroll-target="#ggraph-data-structure">ggraph data structure</a></li>
   </ul>
 </nav>
     </div>
@@ -179,6 +177,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># general datasci toolkit packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># grabbag of datasci tools</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt) <span class="co"># for tables</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pyramidi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'pyramidi' was built under R version 4.3.3</code></pre>
+</div>
+</div>
 <section id="objective" class="level1">
 <h1>Objective</h1>
 <p>Animate the <em>subject</em> of J. S. Bach’s Contrapunctus I as a directed graph using <code>ggraph</code>.</p>
@@ -192,59 +199,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Here is the subject of Contrapunctus I, the focus of this animation project.</p>
 <p><img src="https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png" class="img-fluid"></p>
 </section>
-<section id="getting-the-fucking-data" class="level1">
-<h1>Getting the fucking data</h1>
-<p>As with every new data science project, the biggest hurdle is getting the fucking data in a format I can interface with data science tools.</p>
-<p>I don’t have a midi keyboard yet, so I used the computer keyboard to interface with an onscreen piano in garageband to play the opening melody of Contrapunctus I.</p>
-<p>As a start, I will try using this package for importing midi as a dataframe.</p>
+<section id="midi-to-data" class="level1">
+<h1>Midi to data</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pyramidi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mfr <span class="ot">&lt;-</span> MidiFramer<span class="sc">$</span><span class="fu">new</span>(<span class="st">'../midi/wikisource-contrapunctus-subject.midi'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="abandoned-garageband-to-midi-bossfight" class="level2">
-<h2 class="anchored" data-anchor-id="abandoned-garageband-to-midi-bossfight">Abandoned Garageband to midi bossfight</h2>
-<p>My first attempt at exporting data from garageband failed. I tried converting the raw garageband file but this was not recognised. On closer inspection, it seems I need to dig through <a href="https://apple.stackexchange.com/questions/291622/how-to-save-export-as-a-midi-file-in-garageband">this post</a> deeper if I were to successfully convert garageband to midi.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mfr <span class="ot">&lt;-</span> MidiFramer<span class="sc">$</span><span class="fu">new</span>(<span class="st">'../midi/dimus.band.mid'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): OSError: MThd not found. Probably not a MIDI file</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mididat <span class="ot">&lt;-</span> mfr<span class="sc">$</span>df_notes_long <span class="sc">|&gt;</span> <span class="fu">select</span>(note, b) <span class="sc">|&gt;</span> <span class="fu">distinct</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set the D minor scale </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>d_minor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'D'</span>, <span class="st">'E'</span>, <span class="st">'F'</span>, <span class="st">'G'</span>, <span class="st">'A'</span>, <span class="st">'Bb'</span>, <span class="st">'C#'</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># set the midi number notes for joining </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>note <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">62</span>, <span class="dv">64</span>, <span class="dv">65</span>, <span class="dv">67</span>, <span class="dv">69</span>, <span class="dv">70</span>, <span class="dv">61</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>d_minor <span class="ot">&lt;-</span> <span class="fu">tibble</span>(d_minor, note)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>subject_dat <span class="ot">&lt;-</span> mididat <span class="sc">|&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(d_minor, <span class="at">by =</span> <span class="st">'note'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">step =</span> <span class="fu">rep.int</span>(<span class="fu">c</span>(<span class="st">'start'</span>, <span class="st">'stop'</span>), <span class="at">times =</span> <span class="dv">12</span>), </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">index =</span> <span class="fu">rep</span>(<span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">12</span>), <span class="at">each =</span> <span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> step, <span class="at">values_from =</span> b) <span class="sc">|&gt;</span>   </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">note =</span> <span class="fu">as.integer</span>(note),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">b =</span> start,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">start =</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(start)),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">stop =</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(stop)),</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">bar =</span> start <span class="sc">%/%</span> <span class="dv">16</span> <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">bar =</span> <span class="fu">as.integer</span>(bar),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">duration =</span> stop <span class="sc">-</span> start</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(d_minor, note, start, duration, bar, b) </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(subject_dat, <span class="st">'../mididat.csv'</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>gtfirsttry <span class="ot">&lt;-</span> </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>subject_dat <span class="sc">|&gt;</span> <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tab_header</span>(<span class="fu">md</span>(<span class="st">'![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)'</span>))</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(gtfirsttry, <span class="st">'firsttrytab.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>The console tells me <code>Probably not a MIDI file</code>.</p>
-<p>Happily the <a href="https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png">wikipedia page for Contrapunctus I</a> (from which the image of the motif is sourced) provides a midi file of not only the subject, but the entire fugue. So, for the first two stages of <code>digmus</code>, I now have midi!</p>
 </section>
-<section id="importing-midi-to-r" class="level2">
-<h2 class="anchored" data-anchor-id="importing-midi-to-r">Importing midi to R</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mfr <span class="ot">&lt;-</span> MidiFramer<span class="sc">$</span><span class="fu">new</span>(<span class="st">'../midi/wikisource-contrapunctus-subject.midi'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Let’s take a look at what we get.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mfr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;MidiFramer&gt;
-  Public:
-    clone: function (deep = FALSE) 
-    df_meta: data.frame
-    df_not_notes: data.frame
-    df_notes_long: tbl_df, tbl, data.frame
-    df_notes_wide: tbl_df, tbl, data.frame
-    dfm: tbl_df, tbl, data.frame
-    initialize: function (midi_file_string = NULL) 
-    mf: miditapyr.midi_frame.MidiFrames, python.builtin.object
-    midi_file_string: ../midi/wikisource-contrapunctus-subject.midi
-    midi_frame_mod: tbl_df, tbl, data.frame
-    params: list
-    play: function (audiofile = tempfile("mf_out_", fileext = ".mp3"), 
-    populate_r_fields: function () 
-    ticks_per_beat: active binding
-    update_notes_wide: function (mod) 
-  Private:
-    deep_clone: function (name, value) </code></pre>
-</div>
-</div>
+<section id="ggraph-data-structure" class="level1">
+<h1>ggraph data structure</h1>
+<p>&nbsp;</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
