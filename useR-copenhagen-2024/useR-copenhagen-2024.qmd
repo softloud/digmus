@@ -1,0 +1,130 @@
+---
+title: "Animating a Melody as a Mathematical Object"
+author: 'Charles T. Gray'
+subtitle: 'Copenhagen useR Group'
+date: '12 June, 2024'
+format: 
+  revealjs:
+    css: 
+      - slide_style.css
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(bg = "transparent")
+
+```
+
+```{r}
+library(magrittr)
+
+
+slidegt <- function(df) {
+  df %>% 
+    gt::gt() %>%
+    gt::tab_options(table.background.color = "transparent") %>%
+    gt::tab_style(
+      style = gt::cell_text(size = "xxx-large", font = "Cinzel"),
+      locations = gt::cells_body(columns = gt::everything())
+    )
+}
+
+```
+
+### Music 
+
+![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)
+
+
+::: {.columns}
+::: {.column width="50%"}
+
+
+### Math
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/K%C3%B6nigsberg_graph.svg/1920px-K%C3%B6nigsberg_graph.svg.png" width="500">
+
+:::
+::: {.column width="50%"}
+
+### Code 
+
+
+```{r eval=FALSE, echo=TRUE}
+graphdat %>%
+    select(
+      from = d_minor_text, 
+      to = next_note_text) |>
+    as_tbl_graph() |>
+    ggraph(layout = 'linear') +
+    geom_edge_fan() + 
+    geom_node_point(size = 10) +
+    transition_time(from)
+```
+
+
+:::
+:::
+
+
+# Melody - The Birth of Counterpoint
+
+
+## Canon
+
+### Singing in a Round
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Pa2_oWshsRM?si=W-KLYZBgZUEgERUW&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+---
+
+
+::: {.columns}
+::: {.column width="50%"}
+
+
+### The Art of Fugue 
+
+#### J. S. Bach 1685-1750
+
+
+![](https://upload.wikimedia.org/wikipedia/commons/0/06/Title_page_of_The_Art_of_Fugue.jpg)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mZkqqs0TL7M?si=0obAiBmtfUtuXM4n&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+::: 
+::: {.column width="50%"}
+
+### Contrapunctus I
+
+#### Subject
+
+![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)
+
+![](https://i0.wp.com/ethanhein.com/wp/wp-content/uploads/2021/04/ContrapunctusVII.jpeg?w=1280&ssl=1)
+
+::: 
+::: 
+
+
+# Math - The Birth of Networks
+
+
+## The Seven Bridges of Königsberg
+
+::: {.columns}
+::: {.column width="50%"}
+
+![](https://static.scientificamerican.com/dam/m/227ee895345349ed/original/sevenBridges_graphic_d1.png?w=2000)
+
+:::
+::: {.column width="50%"}
+
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/K%C3%B6nigsberg_graph.svg/1920px-K%C3%B6nigsberg_graph.svg.png)
+
+:::
+:::
+
+Find a walking path through the city that crosses each of its seven bridges exactly once
+
+--- 

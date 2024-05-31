@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+
+.reveal {
+  background-image: url('parchment.jpg');
+  background-size: cover;
+}
+
+.reveal section, .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal p {
+  font-family: 'Cinzel', serif;
+}
+
+.figure {
+  background-color: transparent;
+}
+
+.reveal .code {
+  background-color: transparent;
+}

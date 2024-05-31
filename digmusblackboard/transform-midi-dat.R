@@ -1,13 +1,13 @@
 library(pyramidi)
 library(tidyverse) # grabbag of datasci tools
-
+library(tuneR)
 
 # import the subject from Contrapunctus I as a midiframer object
 mfr <- MidiFramer$new('midi/wikisource-contrapunctus-subject.midi')
 
 
 # this provides a bunch of objects
-mfr
+
 
 # I think the most useful object for this is
 mfr$df_notes_long
@@ -51,3 +51,5 @@ rm(tmp)
 graphdat
 
 write_csv(graphdat, 'mididf.csv')
+
+midi_duration <-  max(mfr$df_notes_long$ticks)

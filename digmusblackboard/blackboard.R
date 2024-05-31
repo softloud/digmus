@@ -72,8 +72,13 @@ graph_animation <- ggraph_obj +
 # Load the required library
 library(av)
 
+
+
 # Animate and save the animation as a video
-animate(graph_animation, nframes = 100, width = 1330, height = 882, renderer = av_renderer("output_animation.mp4"))
+animate(graph_animation
+     width = 1330, height = 882, 
+     duration = 6528,
+     renderer = av_renderer("output_animation.mp4"))
 
 # Combine the video and audio files
 av_encode_video("output_animation.mp4", audio = "midi/wiki-subject-vlc-convert.mp3", output = "final_output.mp4")
