@@ -1,4 +1,4 @@
-
+devtools::install()
 
 library(digmus)
 
