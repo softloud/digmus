@@ -20,7 +20,6 @@ graphdat_raw <-
 head(graphdat_raw)
 
 # create labels
-
 d_minor_text <- c('C#', 'D', 'E', 'F', 'G', 'A', 'Bb')
 
 # will leave engineering labelling for another day
