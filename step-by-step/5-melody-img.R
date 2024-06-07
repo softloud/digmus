@@ -1,3 +1,5 @@
+library(ggraph)
+
 # img for background pkgs
 library(jpeg)
 library(grid)
@@ -39,7 +41,7 @@ melody_graph_plot <-
         theme(plot.margin = margin(0, 0, 0, 0))   # Remove margins
 
 # save plot as an R object for animation
-
+write_rds(melody_graph_plot, 'data-raw/melody_graph_plot.rds')
 
 # Save the plot to see - previewing makes the background weird
 # but the background image still isn't quite sitting how it should
