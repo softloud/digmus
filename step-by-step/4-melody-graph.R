@@ -6,6 +6,7 @@ library(ggraph) # for plotting graphs
 # get the data #
 graph_dat <- readRDS('data-raw/step-output/graph_dat.rds')
 
+# add to so that it knows edges
 
 # add a new row at the beginning
 start_row <- tibble(

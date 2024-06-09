@@ -2,7 +2,7 @@
 library(pyramidi)
 
 # set midi file
-midi_file = 'data-raw/midi/wikisource-contrapunctus-subject.midi'
+midi_file = 'data-raw/midi/reg1.mid'
 
 # source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
 
