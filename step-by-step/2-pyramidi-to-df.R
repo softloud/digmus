@@ -1,7 +1,7 @@
 library(magrittr)
 
 # select relevant columns
-pyramidi_raw <- readRDS('data-raw/pyramidi_subject.rds') 
+pyramidi_raw <- readRDS('data-raw/step-output/pyramidi_subject.rds') 
 
 # create labels
 d_minor_text <- c('C#', 'D', 'E', 'F', 'G', 'A', 'Bb')
@@ -39,4 +39,4 @@ rm(tmp)
 
 graph_dat
 
-saveRDS(graph_dat, 'data-raw/graph_dat.rds')
+saveRDS(graph_dat, 'data-raw/step-output/graph_dat.rds')
