@@ -1,10 +1,10 @@
+# Prompts to set up a python environmnet for reticulate
+library(pyramidi)
+
 # set midi file
 midi_file = 'data-raw/midi/wikisource-contrapunctus-subject.midi'
 
 # source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
-
-# Prompts to set up a python environmnet for reticulate
-library(pyramidi)
 
 # Convert midi to an R object
 midi_r <- pyramidi::MidiFramer$new(midi_file)
