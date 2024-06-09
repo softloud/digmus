@@ -1,8 +1,12 @@
 library(gt)
 
-graph_dat <- readRDS('data-raw/graph_dat.rds')
+graph_dat <- readRDS('data-raw/step-output/graph_dat.rds')
 
 
 # this table helps make sense of the graph object
-graph_dat %>% gt() %>% tab_header(
+melody_tab <- graph_dat %>% gt() %>% tab_header(
         md('![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)')) 
+
+melody_tab
+
+gtsave(melody_tab, 'img/melody-table.png')

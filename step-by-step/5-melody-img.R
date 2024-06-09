@@ -21,7 +21,7 @@ light_sepia <- '#C0A080'
 lightest_sepia <- '#F5DEB3'
 
 # get melody as graph R object
-melody_graph <- read_rds('data-raw/melody_graph.rds')
+melody_graph <- read_rds('data-raw/step-output/melody_graph.rds')
 
 
 # how to make the background image always the same size as plot in preview?
@@ -40,7 +40,7 @@ melody_graph_plot <-
         theme_graph(background = 'transparent') +  # Make the background transparent to show the image
         theme(plot.margin = margin(0, 0, 0, 0))   # Remove margins
 
-write_rds(melody_graph_plot, 'data-raw/melody_graph_plot.rds')
+write_rds(melody_graph_plot, 'data-raw/step-output/melody_graph_plot.rds')
 
 # Save the plot to see - previewing makes the background weird
 # but the background image still isn't quite sitting how it should

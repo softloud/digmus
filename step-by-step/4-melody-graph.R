@@ -4,7 +4,7 @@ library(tidygraph) # for graph objects in R
 library(ggraph) # for plotting graphs
 
 # get the data #
-graph_dat <- readRDS('data-raw/graph_dat.rds')
+graph_dat <- readRDS('data-raw/step-output/graph_dat.rds')
 
 
 # add a new row at the beginning
@@ -37,4 +37,4 @@ melody_graph <- melody_df %>%
 
 melody_graph
 
-write_rds(melody_graph, 'data-raw/melody_graph.rds')
+write_rds(melody_graph, 'data-raw/step-output/melody_graph.rds')

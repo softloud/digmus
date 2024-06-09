@@ -1,7 +1,7 @@
 # set midi file
 midi_file = 'data-raw/midi/wikisource-contrapunctus-subject.midi'
 
-source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
+# source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
 
 # Prompts to set up a python environmnet for reticulate
 library(pyramidi)
@@ -20,9 +20,9 @@ midi_r$df_notes_long
 # tempo
 midi_r$ticks_per_beat
 
-saveRDS(midi_r$df_notes_long, 'data-raw/pyramidi_subject.rds')
+saveRDS(midi_r$df_notes_long, 'data-raw/step-output/pyramidi_subject.rds')
 
-saveRDS(midi_r$ticks_per_beat, 'data-raw/ticks_per_beat.rds')
+saveRDS(midi_r$ticks_per_beat, 'data-raw/step-output/ticks_per_beat.rds')
 
 # Development notes:
 # 

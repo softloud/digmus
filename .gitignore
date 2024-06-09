@@ -1,5 +1,5 @@
 digmusenv/
-data-raw/melody_animation.rds
-data-raw/melody_graph_plot.rds
+data-raw/step-output/melody_animation.rds
+data-raw/step-output/melody_graph_plot.rds
 data-raw/av/
 contrapunctus-i.mp4
