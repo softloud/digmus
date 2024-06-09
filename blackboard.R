@@ -42,3 +42,5 @@ melody_df <-
   mutate(next_note = lead(note_name), 
     next_note = if_else(is.na(next_note), 'D', next_note)
   ) 
+
+

@@ -30,7 +30,7 @@ melody_graph_plot <-
         ggraph(layout = 'linear') +
         annotation_custom(background_raster, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) +
         geom_edge_arc(
-            aes(group = note_index), show.legend = FALSE, 
+            aes(group = note), show.legend = FALSE, 
             colour = dark_sepia, alpha = 0.8) + 
         geom_node_point(size = 20, colour = dark_sepia) +
         geom_node_text(

@@ -1,13 +1,12 @@
-library(tidyverse)
 library(gganimate)
 
 # get graph plot
-melody_graph_plot <- read_rds('data-raw/step-output/melody_graph_plot.rds')
+melody_graph_plot <- readr::read_rds('data-raw/step-output/melody_graph_plot.rds')
 
 # use gganimate on ggraph object 
 melody_animation <- 
     melody_graph_plot +
-    transition_time(tick) +
+    transition_time(t) +
     shadow_mark()
 
 melody_animation

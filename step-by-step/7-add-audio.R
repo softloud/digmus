@@ -11,16 +11,18 @@ system(clean_av)
 # Read the animation
 melody_animation <- readr::read_rds('data-raw/step-output/melody_animation.rds')
 
-
 # Animate and save the animation as a video
-melody_mp4 <- animate(melody_animation,
+melody_rendered <- animate(melody_animation,
      width = 1330, height = 882, 
-     duration = 6,
-     renderer = av_renderer("data-raw/av/animation.mp4"))
+     frame_time = t,
+     duration = 10.2
+     )
 
 
 # take a look
-melody_mp4
+melody_rendered
+
+anim_save('data-raw/av/animation.mp4', melody_rendered)
 
 # convert midi to mp3 using bash tool
 create_mp3 <- 

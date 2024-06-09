@@ -1,6 +1,6 @@
 library(gt)
 
-graph_dat <- readRDS('data-raw/step-output/graph_dat.rds')
+graph_dat <- readRDS('data-raw/step-output/melody_df.rds')
 
 
 # this table helps make sense of the graph object
