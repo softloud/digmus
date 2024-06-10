@@ -5,7 +5,7 @@
 
 An experimentation with animating a melody as a graph. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hmPNfeZ7w9k?si=a9KK5kMGkj4aZzIE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![](http://img.youtube.com/vi/hmPNfeZ7w9k/0.jpg)](http://www.youtube.com/watch?v=hmPNfeZ7w9k "Contrapunctus I Subject as Animated Graph")
 
 ![](outputs/plots-tabs/melody-table.png)
 
