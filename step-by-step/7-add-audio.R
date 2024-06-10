@@ -1,5 +1,4 @@
 # Load the required library
-library(av)
 library(tidyverse)
 library(gganimate)
 
