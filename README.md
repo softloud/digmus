@@ -5,7 +5,7 @@
 
 An experimentation with animating a melody as a graph. 
 
-![](contrapunctus-i.mp4)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hmPNfeZ7w9k?si=a9KK5kMGkj4aZzIE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ![](outputs/plots-tabs/melody-table.png)
 
