@@ -41,6 +41,10 @@ melody_graphable <- melody_df %>%
   arrange(t) 
 
 
+melody_graphable %>% gt() %>% tab_header(
+        md('![](https://upload.wikimedia.org/score/k/u/kuqreev9vn17n29y7rcsbjjw752x7we/kuqreev9.png)')) %>%
+      gtsave('outputs/plots-tabs/melody-graphable.png')
+
 melody_graph <- melody_graphable %>%
     arrange(note) %>%
     as_tbl_graph()
