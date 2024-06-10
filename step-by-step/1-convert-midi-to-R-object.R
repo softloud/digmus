@@ -1,33 +1,35 @@
-# set midi file
-midi_file = 'data-raw/midi/wikisource-contrapunctus-subject.midi'
-
-# source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
-
 # Prompts to set up a python environmnet for reticulate
 library(pyramidi)
+library(magrittr)
+library(zeallot)
 
-# Convert midi to an R object
-midi_r <- pyramidi::MidiFramer$new(midi_file)
-
-# Take a look at the contents
-objects(midi_r)
+# set midi file
+midi_path = 'midi/wikisource-contrapunctus-subject.midi'
+# source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
 
 # Thing we'll use
+midifile <- mido$MidiFile(midi_path)
 
-# notes
-midi_r$df_notes_long
+ticks_per_beat <- midifile$ticks_per_beat
 
-# tempo
-midi_r$ticks_per_beat
+dfc = miditapyr$frame_midi(midifile)
 
-saveRDS(midi_r$df_notes_long, 'data-raw/step-output/pyramidi_subject.rds')
+head(dfc, 20)
 
-saveRDS(midi_r$ticks_per_beat, 'data-raw/step-output/ticks_per_beat.rds')
+df <- miditapyr$unnest_midi(dfc) %>% tibble::as_tibble()
 
-# Development notes:
-# 
-# Originally this was in the package, but in the interest of reducing 
-# dependencies, virtual env, for the workshop, put this in its own script.
-# 
-# Since am only using this one function from pyramidi, there are probably
-# other ways to do this.
+head(df, 20)
+
+
+dfm <- tab_measures(df, ticks_per_beat, c("m", "b", "t", "time")) 
+
+
+dfm %>% 
+    miditapyr$split_df() %->% c(df_meta, df_notes)
+
+pyramidi_notes <- df_notes %>%
+    dplyr::filter(type == 'note_on') %>%
+        dplyr::left_join(pyramidi::midi_defs)
+
+
+saveRDS(pyramidi_notes, 'outputs/step-output/pyramidi_notes.rds')

@@ -4,37 +4,47 @@ library(tidygraph) # for graph objects in R
 library(ggraph) # for plotting graphs
 
 # get the data #
-graph_dat <- readRDS('data-raw/step-output/graph_dat.rds')
+melody_df <- readRDS('outputs/step-output/melody_df.rds')
+
+# Then apply your existing code
+melody_graphable <- melody_df %>%
+  arrange(on) %>%
+  mutate(
+    from = note_name,
+    to = lead(note_name),
+    t = off
+  ) %>%
+  dplyr::filter(!is.na(to)) %>%
+  select(from, to, t, note) %>%
+  # get start note
+  rbind(
+    melody_df %>%
+      mutate(
+        from = note_name,
+        to = note_name,
+        t = 0
+      ) %>%
+      select(from, to, t, note) %>%
+      slice(1)
+  ) %>%
+  # get end note
+  rbind(
+    melody_df %>%
+      mutate(
+        from = note_name,
+        to = note_name,
+        t = off
+      ) %>%
+      select(from, to, t, note) %>%
+      slice(n())
+  ) %>%
+  arrange(t) 
 
 
-# add a new row at the beginning
-start_row <- tibble(
-    from = "D",
-    to = "D",
-    tick = 0, 
-    note_index = 0, 
-    note = 62 
-)
-
-melody_df <- graph_dat %>%
-    select(
-        from = d_minor_text, 
-        to = next_note_text, 
-        tick, 
-        note_index,
-        note) |>
-    bind_rows(start_row) %>%
-    arrange(note_index)
-
-
-#  hack to be fixed later
-melody_df$tick <- c(melody_df$tick[2:13], 7000)
-
-# graph object - tidygraph
-melody_graph <- melody_df %>%
+melody_graph <- melody_graphable %>%
     arrange(note) %>%
     as_tbl_graph()
 
 melody_graph
 
-write_rds(melody_graph, 'data-raw/step-output/melody_graph.rds')
+write_rds(melody_graph, 'outputs/step-output/melody_graph.rds')
