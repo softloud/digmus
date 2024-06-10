@@ -4,7 +4,7 @@ library(magrittr)
 library(zeallot)
 
 # set midi file
-midi_path = 'data-raw/midi/wikisource-contrapunctus-subject.midi'
+midi_path = 'midi/wikisource-contrapunctus-subject.midi'
 # source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
 
 # Thing we'll use
@@ -32,4 +32,4 @@ pyramidi_notes <- df_notes %>%
         dplyr::left_join(pyramidi::midi_defs)
 
 
-saveRDS(pyramidi_notes, 'data-raw/step-output/pyramidi_subject.rds')
+saveRDS(pyramidi_notes, 'outputs/step-output/pyramidi_notes.rds')

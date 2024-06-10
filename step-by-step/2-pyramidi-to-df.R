@@ -1,7 +1,7 @@
 library(magrittr)
 
 # select relevant columns
-pyramidi_raw <- readRDS('data-raw/step-output/pyramidi_subject.rds') 
+pyramidi_raw <- readRDS('outputs/step-output/pyramidi_notes.rds') 
 
 melody_df <- 
   pyramidi_raw %>% 
@@ -12,4 +12,4 @@ melody_df <-
     ) %>% dplyr::select(ii_note, note, note_name, t, status) %>%
     tidyr::pivot_wider(names_from = status, values_from = t) 
 
-saveRDS(melody_df, 'data-raw/step-output/melody_df.rds')
+saveRDS(melody_df, 'outputs/step-output/melody_df.rds')

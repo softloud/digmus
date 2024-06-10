@@ -4,7 +4,7 @@ library(tidygraph) # for graph objects in R
 library(ggraph) # for plotting graphs
 
 # get the data #
-melody_df <- readRDS('data-raw/step-output/melody_df.rds')
+melody_df <- readRDS('outputs/step-output/melody_df.rds')
 
 # Then apply your existing code
 melody_graphable <- melody_df %>%
@@ -17,27 +17,27 @@ melody_graphable <- melody_df %>%
   dplyr::filter(!is.na(to)) %>%
   select(from, to, t, note) %>%
   # get start note
-  # rbind(
-  #   melody_df %>%
-  #     mutate(
-  #       from = note_name,
-  #       to = note_name,
-  #       t = 0
-  #     ) %>%
-  #     select(from, to, t, note) %>%
-  #     slice(1)
-  # ) %>%
-  # # get end note
-  # rbind(
-  #   melody_df %>%
-  #     mutate(
-  #       from = note_name,
-  #       to = note_name,
-  #       t = off
-  #     ) %>%
-  #     select(from, to, t, note) %>%
-  #     slice(n())
-  # ) %>%
+  rbind(
+    melody_df %>%
+      mutate(
+        from = note_name,
+        to = note_name,
+        t = 0
+      ) %>%
+      select(from, to, t, note) %>%
+      slice(1)
+  ) %>%
+  # get end note
+  rbind(
+    melody_df %>%
+      mutate(
+        from = note_name,
+        to = note_name,
+        t = off
+      ) %>%
+      select(from, to, t, note) %>%
+      slice(n())
+  ) %>%
   arrange(t) 
 
 
@@ -47,4 +47,4 @@ melody_graph <- melody_graphable %>%
 
 melody_graph
 
-write_rds(melody_graph, 'data-raw/step-output/melody_graph.rds')
+write_rds(melody_graph, 'outputs/step-output/melody_graph.rds')
