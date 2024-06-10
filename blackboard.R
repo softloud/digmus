@@ -1,46 +1,23 @@
-library(pyramidi)
-library(dplyr)
-library(tidyr)
-library(purrr)
-library(ggplot2)
-library(zeallot)
+# use gganimate on ggraph object 
+melody_graph_plot +
+    transition_states(states = t, transition_length = 2, state_length = 1) +
+    shadow_mark()
 
-# set midi file
-midi_path = 'data-raw/midi/wikisource-contrapunctus-subject.midi'
+melody_df
 
-midifile <- mido$MidiFile(midi_path)
-
-ticks_per_beat <- midifile$ticks_per_beat
-
-dfc = miditapyr$frame_midi(midifile)
-
-head(dfc, 20)
-
-df <- miditapyr$unnest_midi(dfc) %>% as_tibble()
-
-head(df, 20)
-
-
-dfm <- tab_measures(df, ticks_per_beat, c("m", "b", "t", "time")) 
-
-
-dfm %>% 
-    miditapyr$split_df() %->% c(df_meta, df_notes)
-
-
-melody_df <- 
-  df_notes %>% 
-    left_join(pyramidi::midi_defs) %>% 
-    dplyr::filter(type == 'note_on') %>%
-    dplyr::mutate(
-      status = if_else(time == 0, 'on', 'off'),
-      ii_note = (i_note + 1) %/% 2,
-      note_name = stringr::str_remove(note_name, '4')
-    ) %>% dplyr::select(ii_note, note, note_name, t, status) %>%
-    pivot_wider(names_from = status, values_from = t) %>%
+# Add a row of NA values at t = 0
+melody_graphable <- melody_df %>%
   arrange(on) %>%
-  mutate(next_note = lead(note_name), 
-    next_note = if_else(is.na(next_note), 'D', next_note)
-  ) 
+  mutate(
+    from = note_name,
+    to = lead(note_name),
+    t = off
+  ) %>%
+  dplyr::filter(!is.na(to)) %>%
+  select(from, to, t, note) %>%
+  add_row(from = NA, to = NA, t = 0, note = NA) %>%
+  arrange(t)
 
-
+melody_graph %>%
+    ggraph(layout = 'linear') +
+    geom_node_point() 

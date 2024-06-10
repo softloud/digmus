@@ -1,15 +1,11 @@
 # Prompts to set up a python environmnet for reticulate
 library(pyramidi)
+library(magrittr)
+library(zeallot)
 
 # set midi file
 midi_path = 'data-raw/midi/wikisource-contrapunctus-subject.midi'
 # source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
-
-# Convert midi to an R object
-midi_r <- pyramidi::MidiFramer$new(midi_file)
-
-# Take a look at the contents
-objects(midi_r)
 
 # Thing we'll use
 midifile <- mido$MidiFile(midi_path)
@@ -20,7 +16,7 @@ dfc = miditapyr$frame_midi(midifile)
 
 head(dfc, 20)
 
-df <- miditapyr$unnest_midi(dfc) %>% as_tibble()
+df <- miditapyr$unnest_midi(dfc) %>% tibble::as_tibble()
 
 head(df, 20)
 
@@ -33,7 +29,7 @@ dfm %>%
 
 pyramidi_notes <- df_notes %>%
     dplyr::filter(type == 'note_on') %>%
-        left_join(pyramidi::midi_defs)
+        dplyr::left_join(pyramidi::midi_defs)
 
 
 saveRDS(pyramidi_notes, 'data-raw/step-output/pyramidi_subject.rds')
