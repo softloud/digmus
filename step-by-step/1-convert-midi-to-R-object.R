@@ -6,6 +6,8 @@ library(zeallot)
 # set midi file
 midi_path = 'midi/wikisource-contrapunctus-subject.midi'
 # source: https://en.wikipedia.org/wiki/The_Art_of_Fugue
+# midi_path = 'midi/reg1.mid'
+
 
 # Thing we'll use
 midifile <- mido$MidiFile(midi_path)

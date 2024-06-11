@@ -38,7 +38,7 @@ melody_graph_plot <-
             aes(label = name),
             colour = lightest_sepia) +
         theme_graph(background = 'transparent') +  # Make the background transparent to show the image
-        theme(plot.margin = margin(0, 0, 0, 0))   # Remove margins
+        theme(plot.margin = margin(1, 1, 1, 1))   # Remove margins
 
 write_rds(melody_graph_plot, 'outputs/step-output/melody_graph_plot.rds')
 
@@ -46,5 +46,5 @@ write_rds(melody_graph_plot, 'outputs/step-output/melody_graph_plot.rds')
 # but the background image still isn't quite sitting how it should
 ggsave("outputs/plots-tabs/melody_graph.jpg", 
     melody_graph_plot, 
-    width = 1330 * 3, 
-    height = 881 * 3, units = 'px')
+    width = 1333 * 3, 
+    height = 883 * 3, units = 'px')

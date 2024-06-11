@@ -127,4 +127,55 @@ graphdat %>%
 
 Find a walking path through the city that crosses each of its seven bridges exactly once
 
---- 
+
+# Code: `gganimate + tidygraph + ggraph`
+
+## Outputs
+
+::: {.columns}
+::: {.column width="30%"}
+
+![](melody-table.png)
+
+:::
+::: {.column width="70%"}
+
+![](melody_graph.jpg)
+
+:::
+:::
+
+## Steps
+
+
+1. Convert midi to R object using `pyramidi`.
+2. Create melody dataframe.
+3. Use `gt` to make a table of notes.
+4. `tidygraph` graph of notes.
+5. `ggraph` plot.
+6. `gganimate` graph plot.
+7. Add audio.
+8. How these slides were made.
+
+##  Thanks for listening
+
+
+::: {.columns}
+::: {.column width="30%"}
+
+### Be my data friend :) 
+
+![](linkedin.jpeg)
+
+:::
+::: {.column width="70%"}
+
+I'm looking for a data science job in Copenhagen.
+
+- Statistical programming
+- Data engineering 
+- Dashboards & visualisation
+- R, Python, Tableau, DBT (ELT), PostgreSQL, AWS Redshift
+
+:::
+:::
